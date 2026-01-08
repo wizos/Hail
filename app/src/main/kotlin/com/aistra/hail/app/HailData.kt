@@ -87,6 +87,15 @@ object HailData {
         MODE_PRIVAPP_DISABLE
     )
     const val BIOMETRIC_LOGIN = "biometric_login"
+
+    // ===== 新增 =====
+    const val AUTH_TYPE = "auth_type"
+    const val AUTH_TYPE_BIOMETRIC = "biometric"
+    const val AUTH_TYPE_PASSWORD = "password"
+    const val AUTH_PASSWORD = "auth_password"
+    const val REAUTH_ON_RESUME = "reauth_on_resume"
+    const val REAUTH_ON_SCREEN_OFF = "reauth_on_screen_off"
+    // ===== 新增结束 =====
     const val APP_THEME = "app_theme"
     const val FOLLOW_SYSTEM = "follow_system"
     const val THEME_LIGHT = "theme_light"
@@ -138,6 +147,10 @@ object HailData {
     val filterUnfrozenApps get() = sp.getBoolean(FILTER_UNFROZEN_APPS, true)
     val workingMode get() = sp.getString(WORKING_MODE, MODE_DEFAULT)!!
     val biometricLogin get() = sp.getBoolean(BIOMETRIC_LOGIN, false)
+    val authType get() = sp.getString(AUTH_TYPE, AUTH_TYPE_BIOMETRIC) ?: AUTH_TYPE_BIOMETRIC
+    val authPassword get() = sp.getString(AUTH_PASSWORD, "") ?: ""
+    val reauthOnResume get() = sp.getBoolean(REAUTH_ON_RESUME, false)
+    val reauthOnScreenOff get() = sp.getBoolean(REAUTH_ON_SCREEN_OFF, false)
     val appTheme get() = sp.getString(APP_THEME, FOLLOW_SYSTEM)!!
     val iconPack get() = sp.getString(ICON_PACK, ACTION_NONE)!!
     val grayscaleIcon get() = sp.getBoolean(GRAYSCALE_ICON, true)

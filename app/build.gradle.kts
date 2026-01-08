@@ -19,8 +19,8 @@ android {
     compileSdk = 36
 
     defaultConfig {
-        applicationId = "com.aistra.hail"
-        minSdk = 23
+        applicationId = "me.wizos.dungeon"
+        minSdk = 29
         targetSdk = 36
         versionCode = 34
         versionName = "1.10.0"

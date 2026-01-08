@@ -94,6 +94,36 @@ class SettingsFragment : MainFragment(), MenuProvider {
                 titleId = R.string.action_biometric,
                 icon = Icons.Outlined.Fingerprint
             )
+            // 在第 95 行 switchPreference biometric_login 后面添加：
+            listPreference(
+                key = HailData.AUTH_TYPE,
+                defaultValue = HailData.AUTH_TYPE_BIOMETRIC,
+                values = listOf(HailData.AUTH_TYPE_BIOMETRIC, HailData.AUTH_TYPE_PASSWORD),
+                entriesId = R.array.auth_type_entries,
+                titleId = R.string.auth_type_title,
+                icon = Icons.Outlined.Security
+            )
+            preference(
+                key = "set_password",
+                title = { Text(text = stringResource(R.string.set_password)) },
+                summary = { Text(text = stringResource(R.string.set_password_summary)) },
+                icon = { Icon(imageVector = Icons.Outlined.Password, contentDescription = null) }
+            ) {
+                showPasswordDialog()
+            }
+            switchPreference(
+                key = HailData.REAUTH_ON_RESUME,
+                defaultValue = false,
+                titleId = R.string.reauth_on_resume,
+                icon = Icons.Outlined.Sync
+            )
+            switchPreference(
+                key = HailData.REAUTH_ON_SCREEN_OFF,
+                defaultValue = false,
+                titleId = R.string.reauth_on_screen_off,
+                icon = Icons.Outlined.ScreenLockPortrait
+            )
+
             horizontalDivider()
             preferenceCategory(key = "customize", title = { Text(text = stringResource(R.string.title_customize)) })
             listPreference(
@@ -584,5 +614,31 @@ class SettingsFragment : MainFragment(), MenuProvider {
                     onTerminalResult(result.first, result.second)
                 }
             }.setNegativeButton(android.R.string.cancel, null).show()
+    }
+    private fun showPasswordDialog() {
+        val binding = DialogInputBinding.inflate(layoutInflater)
+        binding.inputLayout.hint = getString(R.string.password_hint)
+        binding.editText.run {
+            inputType = android.text.InputType.TYPE_CLASS_NUMBER
+        }
+        MaterialAlertDialogBuilder(requireActivity()).setTitle(R.string.set_password)
+            .setMessage("只能输入 0-9 数字密码，在计算器中长按 = 号解密")
+            .setView(binding.root)
+            .setPositiveButton(android.R.string.ok) { _, _ ->
+                val password = binding.editText.text.toString()
+                android.util.Log.d("PasswordDebug", "存储密码1: $password - '${HailData.authPassword}'")
+                if (com.aistra.hail.ui.auth.AuthManager.validatePasswordFormat(password)) {
+                    val success = com.aistra.hail.ui.auth.AuthManager.setPassword(password)
+                    if (success) {
+                        //HUI.showToast(R.string.password_set_success)
+                    } else {
+                        HUI.showToast("密码保存失败，请重试")
+                    }
+                } else {
+                    HUI.showToast(R.string.password_format_error)
+                }
+            }
+            .setNegativeButton(android.R.string.cancel, null)
+            .show()
     }
 }

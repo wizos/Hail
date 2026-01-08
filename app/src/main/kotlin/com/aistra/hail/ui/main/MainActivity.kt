@@ -2,12 +2,9 @@ package com.aistra.hail.ui.main
 
 import android.os.Bundle
 import android.view.Menu
+import android.view.View
+import android.widget.FrameLayout
 import androidx.appcompat.app.AppCompatActivity
-import androidx.biometric.BiometricManager
-import androidx.biometric.BiometricManager.Authenticators.BIOMETRIC_STRONG
-import androidx.biometric.BiometricManager.Authenticators.DEVICE_CREDENTIAL
-import androidx.biometric.BiometricPrompt
-import androidx.core.content.ContextCompat
 import androidx.core.view.MenuCompat
 import androidx.core.view.WindowCompat
 import androidx.core.view.isVisible
@@ -17,47 +14,119 @@ import androidx.navigation.fragment.NavHostFragment
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.preference.PreferenceManager
 import com.aistra.hail.R
 import com.aistra.hail.app.HailData
 import com.aistra.hail.databinding.ActivityMainBinding
 import com.aistra.hail.extensions.*
+import com.aistra.hail.ui.auth.AuthManager
+import com.aistra.hail.ui.auth.CalculatorView
 import com.aistra.hail.utils.HPolicy
 import com.aistra.hail.utils.HUI
 import com.google.android.material.appbar.AppBarLayout
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
+import androidx.core.content.edit
 
 class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedListener {
     lateinit var fab: ExtendedFloatingActionButton
     lateinit var appbar: AppBarLayout
 
+    private var isAuthenticated = false
+    private var isInBackground = false
+    private var calculatorOverlay: FrameLayout? = null
+    private lateinit var mainContent: View
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         WindowCompat.setDecorFitsSystemWindows(window, false)
         val binding = initView()
-        if (!HailData.biometricLogin || BiometricManager.from(this)
-                .canAuthenticate(BIOMETRIC_STRONG or DEVICE_CREDENTIAL) != BiometricManager.BIOMETRIC_SUCCESS
-        ) return
-        binding.root.isVisible = false
-        val biometricPrompt = BiometricPrompt(
-            this,
-            ContextCompat.getMainExecutor(this),
-            object : BiometricPrompt.AuthenticationCallback() {
-                override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                    super.onAuthenticationError(errorCode, errString)
-                    HUI.showToast(errString)
-                    finishAndRemoveTask()
-                }
 
-                override fun onAuthenticationSucceeded(result: BiometricPrompt.AuthenticationResult) {
-                    super.onAuthenticationSucceeded(result)
+        mainContent = binding.root
+
+        // 如果不需要认证，直接显示
+        if (!AuthManager.isAuthEnabled()) {
+            isAuthenticated = true
+            return
+        }
+
+        // 检查息屏后是否需要重新认证
+        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+        val needReauth = if (AuthManager.needReauthOnScreenOff()) {
+            sp.getBoolean("need_reauth", false)
+        } else false
+
+        if (needReauth) {
+            sp.edit().putBoolean("need_reauth", false).apply()
+            // 息屏后需要重新认证
+        }
+
+        if (HailData.authType == HailData.AUTH_TYPE_PASSWORD) {
+            // 密码认证模式
+            createCalculatorOverlay(binding)
+
+            // 如果未认证或需要重新认证，显示计算器
+            if (!isAuthenticated) {
+                calculatorOverlay?.isVisible = true
+                mainContent.isVisible = false
+            }
+        } else {
+            // 生物识别认证模式
+            binding.root.isVisible = false
+            performBiometricAuth(binding)
+        }
+    }
+
+    private fun createCalculatorOverlay(binding: ActivityMainBinding) {
+        calculatorOverlay = FrameLayout(this).apply {
+            setBackgroundColor(android.graphics.Color.WHITE)
+            layoutParams = FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+
+            val calculator = CalculatorView(this@MainActivity)
+            calculator.setOnPasswordEntered { password ->
+                android.util.Log.d("PasswordDebug", "输入密码: '$password'")
+                android.util.Log.d("PasswordDebug", "存储密码: '${HailData.authPassword}'")
+                android.util.Log.d("PasswordDebug", "是否相等: ${password == HailData.authPassword}")
+
+                if (AuthManager.authenticatePassword(password)) {
+                    isAuthenticated = true
+                    this@MainActivity.calculatorOverlay?.isVisible = false
+                    calculator.display.text = ""
                     binding.root.isVisible = true
+                    HUI.showToast("认证成功")
+                } else {
+                    calculator.clearInput()
+                    HUI.showToast("密码错误")
                 }
-            })
-        val promptInfo = BiometricPrompt.PromptInfo.Builder().setTitle(getString(R.string.action_biometric))
-            .setSubtitle(getString(R.string.msg_biometric)).setNegativeButtonText(getString(android.R.string.cancel))
-            .build()
-        biometricPrompt.authenticate(promptInfo)
+            }
+            addView(calculator)
+        }
+
+        // 添加到window
+        addContentView(
+            calculatorOverlay,
+            FrameLayout.LayoutParams(
+                FrameLayout.LayoutParams.MATCH_PARENT,
+                FrameLayout.LayoutParams.MATCH_PARENT
+            )
+        )
+    }
+
+    private fun performBiometricAuth(binding: ActivityMainBinding) {
+        AuthManager.authenticateBiometric(
+            this,
+            onSuccess = {
+                isAuthenticated = true
+                binding.root.isVisible = true
+            },
+            onError = { error ->
+                HUI.showToast(error)
+                finishAndRemoveTask()
+            }
+        )
     }
 
     private fun initView() = ActivityMainBinding.inflate(layoutInflater).apply {
@@ -99,10 +168,50 @@ class MainActivity : AppCompatActivity(), NavController.OnDestinationChangedList
             }.setNegativeButton(android.R.string.cancel, null).show()
     }
 
-    /* override fun onStop() {
+    override fun onStop() {
         super.onStop()
-        if (HailData.biometricLogin) finishAndRemoveTask()
-    } */
+        // 标记进入后台
+        if (AuthManager.needReauthOnResume()) {
+            isInBackground = true
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        // 场景1：从后台恢复，需要重新认证
+        if (isInBackground && isAuthenticated && AuthManager.needReauthOnResume()) {
+            isAuthenticated = false
+            reAuthenticate()
+            isInBackground = false
+            return
+        }
+
+        // 场景2：检查息屏标记
+        val sp = PreferenceManager.getDefaultSharedPreferences(this)
+        if (sp.getBoolean("need_reauth", false)) {
+            sp.edit { putBoolean("need_reauth", false) }
+            if (isAuthenticated) {
+                isAuthenticated = false
+                reAuthenticate()
+            }
+        }
+
+        isInBackground = false
+    }
+
+    private fun reAuthenticate() {
+        if (HailData.authType == HailData.AUTH_TYPE_PASSWORD) {
+            // 确保遮罩层存在
+            if (calculatorOverlay == null) {
+                createCalculatorOverlay(ActivityMainBinding.bind(mainContent))
+            }
+            calculatorOverlay?.isVisible = true
+            mainContent.isVisible = false
+        } else {
+            mainContent.isVisible = false
+            performBiometricAuth(ActivityMainBinding.bind(mainContent))
+        }
+    }
 
     override fun onDestinationChanged(
         controller: NavController, destination: NavDestination, arguments: Bundle?

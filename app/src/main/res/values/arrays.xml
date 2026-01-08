@@ -89,4 +89,13 @@
         <item>@string/action_lock</item>
         <item>@string/action_lock_freeze</item>
     </string-array>
+
+    <string-array name="auth_type_entries">
+        <item>生物识别（指纹/人脸）</item>
+        <item>密码（计算器伪装）</item>
+    </string-array>
+    <string-array name="auth_type_values">
+        <item>biometric</item>
+        <item>password</item>
+    </string-array>
 </resources>
