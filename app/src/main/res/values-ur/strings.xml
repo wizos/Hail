@@ -109,10 +109,10 @@
     <string name="mode_su_suspend">سپر یوزر - معطل</string>
     <string name="mode_shizuku_disable">شیزوکو - غیر فعال کریں</string>
     <string name="sort_by">ترتیب دیں</string>
-    <string name="sort_install">پہلے انسٹال کریں</string>
-    <string name="sort_update">آخری اپ ڈیٹ</string>
+    <string name="sort_by_install_time">پہلے انسٹال کریں</string>
+    <string name="sort_by_update_time">آخری اپ ڈیٹ</string>
     <string name="donate_alipay">علیپے</string>
-    <string name="sort_name">نام</string>
+    <string name="sort_by_name">نام</string>
     <string name="title_donate">شکریہ!</string>
     <string name="donate_bilibili_cancel">\@android:string/کینسل</string>
     <string name="msg_unfreeze">غیر منجمد: %s</string>

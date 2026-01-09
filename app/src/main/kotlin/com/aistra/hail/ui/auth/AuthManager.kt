@@ -80,12 +80,6 @@ object AuthManager {
 
     fun setPassword(password: String): Boolean {
         // 简化：直接明文存储（可选，也可以使用hash）
-        // val hashed = hashPassword(password)
-//            androidx.preference.PreferenceManager.getDefaultSharedPreferences(com.aistra.hail.HailApp.app)
-//                .edit(commit = true) {
-//                    putString(HailData.AUTH_PASSWORD, password)
-//                }  // 改为 commit()，同步保存
-
         val editor = androidx.preference.PreferenceManager.getDefaultSharedPreferences(com.aistra.hail.HailApp.app).edit()
         editor.putString(HailData.AUTH_PASSWORD, password)
         val success = editor.commit()  // commit() 返回是否保存成功

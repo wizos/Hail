@@ -56,9 +56,9 @@
     <string name="filter_frozen_apps">無効</string>
     <string name="filter_unfrozen_apps">有効</string>
     <string name="sort_by">並び替え</string>
-    <string name="sort_name">名前</string>
-    <string name="sort_install">インストール日</string>
-    <string name="sort_update">更新日</string>
+    <string name="sort_by_name">名前</string>
+    <string name="sort_by_install_time">インストール日</string>
+    <string name="sort_by_update_time">更新日</string>
     <string name="title_donate">応援ありがとうございます！</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>

@@ -67,9 +67,9 @@
     <string name="filter_frozen_apps">Frozen</string>
     <string name="filter_unfrozen_apps">Unfrozen</string>
     <string name="sort_by">Sort by</string>
-    <string name="sort_name">Name</string>
-    <string name="sort_install">First install</string>
-    <string name="sort_update">Last update</string>
+    <string name="sort_by_name">Name</string>
+    <string name="sort_by_install_time">First install</string>
+    <string name="sort_by_update_time">Last update</string>
     <string name="title_donate">Thank you!</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
@@ -100,6 +100,7 @@
         <item quantity="one">%2$s after %1$d minute: %3$s</item>
         <item quantity="other">%2$s after %1$d minutes: %3$s</item>
     </plurals>
+    <string name="msg_shortcuts_cleared">Cleared: shortcuts</string>
     <string name="action_clear_dynamic_shortcuts">Clear all dynamic shortcuts</string>
     <string name="tile_action">Tile action</string>
     <string name="auto_freeze">Auto freeze</string>
@@ -131,6 +132,7 @@
     <string name="action_freeze_tag">Freeze tag</string>
     <string name="action_unfreeze_tag">Unfreeze tag</string>
     <string name="icon_pack">Icon pack</string>
+    <string name="msg_icon_pack_changed">Changed: Icon pack</string>
     <string name="action_select_all">Select all</string>
     <string name="action_terminal">Terminal</string>
     <string name="mode_dhizuku_hide">Dhizuku - Hide</string>
@@ -155,7 +157,6 @@
     <string name="theme_light">Light</string>
     <string name="theme_dark">Dark</string>
 
-    <!-- 在文件末尾 </resources> 前添加 -->
     <string name="auth_type_title">认证方式</string>
     <string name="auth_type_biometric">生物识别（指纹/人脸）</string>
     <string name="auth_type_password">密码（计算器伪装）</string>
@@ -167,4 +168,8 @@
     <string name="password_format_error">密码格式错误：只能输入 0-9 数字</string>
     <string name="reauth_on_resume">切换应用后重新认证</string>
     <string name="reauth_on_screen_off">息屏后重新认证</string>
+    <string name="tag_exists">Tag already exists</string>
+    <string name="msg_usage_stats_permission">Usage Stats permission is required to get foreground app.</string>
+    <string name="msg_notification_listener_permission">Notification Listener permission is required to get a list of apps with notifications.</string>
+
 </resources>

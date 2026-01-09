@@ -58,9 +58,9 @@
     <string name="filter_frozen_apps">已冻结</string>
     <string name="filter_unfrozen_apps">未冻结</string>
     <string name="sort_by">排序方式</string>
-    <string name="sort_name">名称</string>
-    <string name="sort_install">首次安装</string>
-    <string name="sort_update">最近更新</string>
+    <string name="sort_by_name">名称</string>
+    <string name="sort_by_install_time">首次安装</string>
+    <string name="sort_by_update_time">最近更新</string>
     <string name="title_donate">谢谢你。</string>
     <string name="donate_alipay">支付宝</string>
     <string name="donate_wechat">微信支付</string>
@@ -92,6 +92,7 @@
     <plurals name="msg_deferred_task">
         <item quantity="other">%1$d 分钟后%2$s：%3$s</item>
     </plurals>
+    <string name="msg_shortcuts_cleared">已清除快捷方式</string>
     <string name="action_clear_dynamic_shortcuts">清除动态快捷方式</string>
     <string name="tile_action">快捷设置操作</string>
     <string name="auto_freeze">自动冻结</string>
@@ -128,6 +129,7 @@
     <string name="action_freeze_tag">标签冻结</string>
     <string name="action_unfreeze_tag">标签解冻</string>
     <string name="icon_pack">图标包</string>
+    <string name="msg_icon_pack_changed">图标包已更改</string>
     <string name="action_select_all">全选</string>
     <string name="action_terminal">终端</string>
     <string name="mode_dhizuku_hide">Dhizuku - 隐藏</string>
@@ -155,4 +157,17 @@
     <string name="theme_dark">深色</string>
     <string name="app_theme">应用主题</string>
     <string name="follow_system">跟随系统</string>
+
+    <!-- 在文件末尾 </resources> 前添加 -->
+    <string name="auth_type_title">认证方式</string>
+    <string name="auth_type_biometric">生物识别（指纹/人脸）</string>
+    <string name="auth_type_password">密码（计算器伪装）</string>
+    <string name="set_password">设置密码</string>
+    <string name="set_password_summary">设置计算器伪装密码</string>
+    <string name="set_password_message">只能输入 0-9 数字密码，在计算器中长按 = 号解密</string>
+    <string name="password_hint">输入密码</string>
+    <string name="password_set_success">密码设置成功</string>
+    <string name="password_format_error">密码格式错误：只能输入 0-9 数字</string>
+    <string name="reauth_on_resume">切换应用后重新认证</string>
+    <string name="reauth_on_screen_off">息屏后重新认证</string>
 </resources>

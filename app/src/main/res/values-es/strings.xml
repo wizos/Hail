@@ -57,9 +57,9 @@
     <string name="filter_frozen_apps">Congelar</string>
     <string name="filter_unfrozen_apps">Descongelar</string>
     <string name="sort_by">Ordenar por</string>
-    <string name="sort_name">Nombre</string>
-    <string name="sort_install">Primera instalación</string>
-    <string name="sort_update">Última actualización</string>
+    <string name="sort_by_name">Nombre</string>
+    <string name="sort_by_install_time">Primera instalación</string>
+    <string name="sort_by_update_time">Última actualización</string>
     <string name="title_donate">¡Graicas!</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>

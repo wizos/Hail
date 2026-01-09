@@ -69,9 +69,9 @@ android {
         noCompress += "dex"
     }
     buildFeatures {
-        viewBinding = true
         buildConfig = true
         compose = true
+        viewBinding = false
     }
     dependenciesInfo {
         includeInApk = false
@@ -81,26 +81,25 @@ android {
 
 dependencies {
     implementation(platform(libs.androidx.compose.bom))
+    implementation(platform(libs.koin.bom))
+    implementation(libs.koin.androidx.compose)
     implementation(libs.androidx.activity.compose)
     implementation(libs.androidx.material3)
+    implementation("com.google.android.material:material:1.10.0")
+//    implementation(libs.androidx.compose.material3.pull.to.refresh)
     implementation(libs.androidx.material.icons.extended)
     implementation(libs.androidx.ui.tooling.preview)
     debugImplementation(libs.androidx.ui.tooling)
-    implementation(libs.androidx.appcompat)
     implementation(libs.androidx.biometric.ktx)
-    implementation(libs.androidx.constraintlayout)
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.livedata.ktx)
-    implementation(libs.androidx.navigation.fragment.ktx)
-    implementation(libs.androidx.navigation.ui.ktx)
+    implementation(libs.androidx.navigation.compose)
     implementation(libs.androidx.preference.ktx)
-    implementation(libs.androidx.swiperefreshlayout)
     implementation(libs.androidx.work.runtime.ktx)
     implementation(libs.pinyin4j)
-    implementation(libs.material)
-    implementation(libs.insetter)
     implementation(libs.shizuku.api)
     implementation(libs.shizuku.provider)
+    implementation(libs.insetter)
     implementation(libs.dhizuku.api)
     implementation(libs.appiconloader)
     implementation(libs.compose.preference)

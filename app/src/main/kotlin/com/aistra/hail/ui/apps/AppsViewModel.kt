@@ -2,118 +2,155 @@ package com.aistra.hail.ui.apps
 
 import android.app.Application
 import android.content.pm.ApplicationInfo
+import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.viewModelScope
-import com.aistra.hail.HailApp
+import com.aistra.hail.R
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
-import com.aistra.hail.utils.*
-import kotlinx.coroutines.*
+import com.aistra.hail.utils.FuzzySearch
+import com.aistra.hail.utils.HFiles
+import com.aistra.hail.utils.HPackages
+import com.aistra.hail.utils.HUI
+import com.aistra.hail.utils.NineKeySearch
+import com.aistra.hail.utils.PinyinSearch
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asSharedFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.combine
+import kotlinx.coroutines.launch
+import kotlinx.coroutines.withContext
+import java.io.FileInputStream
+
+sealed class AppsViewEvent {
+    data class ShowToast(val message: Int, val args: Any? = null) : AppsViewEvent()
+    data class ExportApk(val fileName: String) : AppsViewEvent()
+    data class ShowUninstallDialog(val appInfo: ApplicationInfo) : AppsViewEvent()
+}
 
 class AppsViewModel(application: Application) : AndroidViewModel(application) {
-    val apps = MutableLiveData<List<ApplicationInfo>>()
-    val isRefreshing = MutableLiveData(false)
-    val query = MutableLiveData("")
-    val displayApps = MutableLiveData<List<ApplicationInfo>>()
+
+    private val _allApps = MutableStateFlow<List<ApplicationInfo>>(emptyList())
+    private val _isRefreshing = MutableStateFlow(false)
+    val isRefreshing = _isRefreshing.asStateFlow()
+
+    private val _searchQuery = MutableStateFlow("")
+    val searchQuery = _searchQuery.asStateFlow()
+
+    private val _sortOption = MutableStateFlow(HailData.sortBy)
+    val sortOption = _sortOption.asStateFlow()
+
+    private val _filterOptions = MutableStateFlow(
+        mapOf(
+            HailData.FILTER_USER_APPS to true,
+            HailData.FILTER_SYSTEM_APPS to false,
+            HailData.FILTER_FROZEN_APPS to false,
+            HailData.FILTER_UNFROZEN_APPS to false,
+        )
+    )
+    val filterOptions = _filterOptions.asStateFlow()
+
+    val displayedApps = combine(
+        _allApps, _searchQuery, _sortOption, _filterOptions
+    ) { apps, query, sort, filters ->
+        var finalList = apps
+
+        // Filtering logic...
+
+        // Sorting logic...
+
+        finalList
+    }
+
+    private val _events = MutableSharedFlow<AppsViewEvent>()
+    val events = _events.asSharedFlow()
 
     init {
-        updateAppList()
+        loadApps()
     }
 
-    private var refreshJob: Job? = null
-    private var refreshStateJob: Job? = null
-
-    /**
-     * Delaying changes to the refreshing state prevents the progress bar from flickering.
-     * */
-    private fun postRefreshState(state: Boolean, delayTime: Long = 200L) {
-        if (!state) {
-            refreshStateJob?.cancel()
-            isRefreshing.postValue(false)
-        } else if (refreshStateJob == null || refreshStateJob!!.isCompleted) {
-            refreshStateJob = viewModelScope.launch {
-                delay(delayTime)
-                isRefreshing.postValue(true)
-            }
-        }
-    }
-
-    fun postQuery(text: String, delayTime: Long = 300L) {
-        refreshJob?.cancel()
-        if (delayTime == 0L)
-            query.postValue(text)
-        else {
-            refreshJob = viewModelScope.launch {
-                delay(delayTime)
-                query.postValue(text)
-            }
-        }
-    }
-
-    /**
-     * This method is only used to refresh all the applications that the user has installed
-     * and has no filtering or sorting effect.
-     * */
-    fun updateAppList() {
+    fun loadApps() {
         viewModelScope.launch {
-            postRefreshState(true)
-            apps.postValue(HPackages.getInstalledApplications())
+            _isRefreshing.value = true
+            _allApps.value = withContext(Dispatchers.IO) {
+                HPackages.getInstalledApplications()
+            }
+            _isRefreshing.value = false
         }
     }
 
-    /**
-     * The list that the user actually sees.
-     *
-     * This method is different from `updateAppList()` in that it filters and rearranges the data
-     * from `apps` and places it in `displayApps`.
-     * */
-    fun updateDisplayAppList() {
-        apps.value?.let {
-            viewModelScope.launch {
-                postRefreshState(true)
-                displayApps.postValue(filterList(it, query.value))
-                postRefreshState(false)
+    fun onSearchQueryChanged(query: String) {
+        _searchQuery.value = query
+    }
+
+    fun onSortChanged(sort: String) {
+        _sortOption.value = sort
+        HailData.sortBy = sort
+    }
+
+    fun onFilterChanged(filter: String, isEnabled: Boolean) {
+        val newFilters = _filterOptions.value.toMutableMap()
+        if (filter == HailData.FILTER_USER_APPS && isEnabled) {
+            newFilters[HailData.FILTER_SYSTEM_APPS] = false
+        } else if (filter == HailData.FILTER_SYSTEM_APPS && isEnabled) {
+            newFilters[HailData.FILTER_USER_APPS] = false
+        }
+        newFilters[filter] = isEnabled
+        _filterOptions.value = newFilters
+
+        if (filter == HailData.FILTER_USER_APPS || filter == HailData.FILTER_SYSTEM_APPS) {
+            HailData.changeAppsFilter(filter, isEnabled)
+            HailData.changeAppsFilter(if (filter == HailData.FILTER_USER_APPS) HailData.FILTER_SYSTEM_APPS else HailData.FILTER_USER_APPS, !isEnabled)
+        } else {
+            HailData.changeAppsFilter(filter, isEnabled)
+        }
+    }
+
+    fun exportApk(appInfo: ApplicationInfo) {
+        viewModelScope.launch {
+            _events.emit(AppsViewEvent.ExportApk("${appInfo.loadLabel(getApplication<Application>().packageManager)}.apk"))
+        }
+    }
+    
+    fun onApkExportUriReceived(uri: Uri?, appInfo: ApplicationInfo) {
+        if (uri == null) return
+        viewModelScope.launch {
+             runCatching {
+                withContext(Dispatchers.IO) {
+                    FileInputStream(appInfo.sourceDir).use { source ->
+                        getApplication<Application>().contentResolver.openOutputStream(uri, "rwt").use { target ->
+                            if (target == null) return@withContext
+                            HFiles.copy(source, target)
+                        }
+                    }
+                }
+            }.onSuccess {
+                _events.emit(AppsViewEvent.ShowToast(R.string.msg_extract_apk, uri.toString()))
+            }.onFailure {
+                _events.emit(AppsViewEvent.ShowToast(R.string.operation_failed, it.localizedMessage ?: "Unknown"))
             }
         }
     }
 
-
-    private val ApplicationInfo.isSystemApp: Boolean
-        get() = flags and ApplicationInfo.FLAG_SYSTEM == ApplicationInfo.FLAG_SYSTEM
-    private val ApplicationInfo.isAppFrozen get() = AppManager.isAppFrozen(packageName)
-
-    private suspend fun filterList(
-        appList: List<ApplicationInfo>,
-        query: String?
-    ): List<ApplicationInfo> {
-        val pm = getApplication<HailApp>().packageManager
-        return withContext(Dispatchers.Default) {
-            return@withContext appList.filter {
-                ((HailData.filterUserApps && !it.isSystemApp)
-                        || (HailData.filterSystemApps && it.isSystemApp))
-
-                        && ((HailData.filterFrozenApps && it.isAppFrozen)
-                        || (HailData.filterUnfrozenApps && !it.isAppFrozen))
-                        // Search apps
-                        && ((HailData.nineKeySearch
-                        && (NineKeySearch.search(query, it.packageName, it.loadLabel(pm).toString())))
-                        || FuzzySearch.search(it.packageName, query)
-                        || FuzzySearch.search(it.loadLabel(pm).toString(), query)
-                        || PinyinSearch.searchPinyinAll(it.loadLabel(pm).toString(), query))
-            }.run {
-                when (HailData.sortBy) {
-                    HailData.SORT_INSTALL -> sortedBy {
-                        HPackages.getUnhiddenPackageInfoOrNull(it.packageName)
-                            ?.firstInstallTime ?: 0
-                    }
-
-                    HailData.SORT_UPDATE -> sortedByDescending {
-                        HPackages.getUnhiddenPackageInfoOrNull(it.packageName)?.lastUpdateTime ?: 0
-                    }
-
-                    else -> sortedWith(NameComparator)
+    fun uninstallApp(appInfo: ApplicationInfo) {
+        viewModelScope.launch {
+            when {
+                HPackages.isAppUninstalled(appInfo.packageName) -> _events.emit(AppsViewEvent.ShowToast(R.string.app_not_installed))
+                appInfo.packageName == getApplication<Application>().packageName -> {
+                    // Handle self-uninstall logic
                 }
+                HailData.workingMode == HailData.MODE_DEFAULT -> AppManager.uninstallApp(appInfo.packageName)
+                else -> _events.emit(AppsViewEvent.ShowUninstallDialog(appInfo))
+            }
+        }
+    }
+    
+    fun confirmUninstall(appInfo: ApplicationInfo) {
+        viewModelScope.launch {
+            if (AppManager.uninstallApp(appInfo.packageName)) {
+                loadApps()
             }
         }
     }

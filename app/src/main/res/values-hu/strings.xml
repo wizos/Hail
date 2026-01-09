@@ -45,8 +45,8 @@
     <string name="filter_system_apps">Rendszer</string>
     <string name="filter_unfrozen_apps">Kiolvasztva</string>
     <string name="sort_by">Rendezés eszerint</string>
-    <string name="sort_install">Korábban telepítettek</string>
-    <string name="sort_update">Utoljára frissítettek</string>
+    <string name="sort_by_install_time">Korábban telepítettek</string>
+    <string name="sort_by_update_time">Utoljára frissítettek</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
     <string name="donate_bilibili">Bilibili</string>
@@ -125,7 +125,7 @@
     <string name="msg_set_owner">Parancskiadás ADB-ből: \n%s</string>
     <string name="action_unfreeze_all">Mind felolvasztása</string>
     <string name="filter_by">Szűrő</string>
-    <string name="sort_name">Név</string>
+    <string name="sort_by_name">Név</string>
     <string name="mode_owner_hide">Eszköztulajdonos - Elrejtés</string>
     <string name="action_undo">Visszavonás</string>
     <string name="mode_owner_suspend">Eszköztulajdonos - Felfüggesztés</string>

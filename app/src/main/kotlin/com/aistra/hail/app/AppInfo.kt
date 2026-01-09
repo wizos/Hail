@@ -13,7 +13,7 @@ class AppInfo(
     enum class State { NOT_FOUND, UNFROZEN, FROZEN }
 
     val applicationInfo: ApplicationInfo? get() = HPackages.getApplicationInfoOrNull(packageName)
-    val name get() = applicationInfo?.loadLabel(app.packageManager) ?: packageName
+    val name: CharSequence get() = applicationInfo?.loadLabel(app.packageManager) ?: packageName
     val state
         get() = when {
             applicationInfo == null -> State.NOT_FOUND

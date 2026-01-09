@@ -10,9 +10,9 @@
     <string name="action_help">ସହାୟତା</string>
     <string name="action_search">ସନ୍ଧାନ</string>
     <string name="action_details">ଆପ୍ ସୂଚନା</string>
-    <string name="sort_install">ପ୍ରଥମ ଅଧିସ୍ଥାପନ</string>
-    <string name="sort_update">ଗତ ଅଦ୍ୟତନ</string>
-    <string name="sort_name">ନାମ</string>
+    <string name="sort_by_install_time">ପ୍ରଥମ ଅଧିସ୍ଥାପନ</string>
+    <string name="sort_by_update_time">ଗତ ଅଦ୍ୟତନ</string>
+    <string name="sort_by_name">ନାମ</string>
     <plurals name="deferred_task_entry">
         <item quantity="one">%d ମିନିଟ୍</item>
         <item quantity="other">%d ମିନିଟ୍</item>

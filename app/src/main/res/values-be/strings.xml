@@ -58,8 +58,8 @@
     <string name="filter_user_apps">Карыстальніцькі</string>
     <string name="filter_system_apps">Сістэмны</string>
     <string name="sort_by">Сартаваць па</string>
-    <string name="sort_install">Дата ўстаноўкі</string>
-    <string name="sort_update">Апошняе абнаўленне</string>
+    <string name="sort_by_install_time">Дата ўстаноўкі</string>
+    <string name="sort_by_update_time">Апошняе абнаўленне</string>
     <string name="title_donate">Дякуємо!</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>
@@ -81,7 +81,7 @@
         <item quantity="other">%2$s праз %1$d хвілін: %3$s</item>
     </plurals>
     <string name="filter_unfrozen_apps">Незаморожені</string>
-    <string name="sort_name">Назва</string>
+    <string name="sort_by_name">Назва</string>
     <string name="donate_wechat_scan">Сканаваць</string>
     <string name="donate_bilibili_msg">Падпішыцеся на мой Bilibili.</string>
     <string name="donate_bilibili_space">Прастора Bilibili</string>

@@ -98,9 +98,9 @@
     <string name="filter_frozen_apps">உறைந்த</string>
     <string name="filter_unfrozen_apps">அன்ரோசன்</string>
     <string name="sort_by">வரிசைப்படுத்தவும்</string>
-    <string name="sort_name">பெயர்</string>
-    <string name="sort_install">முதல் நிறுவல்</string>
-    <string name="sort_update">கடைசி புதுப்பிப்பு</string>
+    <string name="sort_by_name">பெயர்</string>
+    <string name="sort_by_install_time">முதல் நிறுவல்</string>
+    <string name="sort_by_update_time">கடைசி புதுப்பிப்பு</string>
     <string name="title_donate">நன்றி!</string>
     <string name="donate_alipay">அலிபே</string>
     <string name="donate_wechat">Wechat pay</string>

@@ -79,7 +79,7 @@
     <string name="msg_exported">Exportée : %s</string>
     <string name="donate_liberapay">Liberapay</string>
     <string name="skip_foreground_app">Ignorer les applications de premier plan</string>
-    <string name="sort_name">Nom</string>
+    <string name="sort_by_name">Nom</string>
     <string name="auto_freeze_notification_title">Auto Gel est en fonctionnement</string>
     <string name="filter_frozen_apps">Gelées</string>
     <string name="msg_selected">Sélectionnée : %s</string>
@@ -115,7 +115,7 @@
     <string name="mode_island_hide">Island/Insular - Masquer</string>
     <string name="mode_shizuku_hide">Shizuku - Cacher</string>
     <string name="filter_system_apps">Système</string>
-    <string name="sort_install">Première installation</string>
+    <string name="sort_by_install_time">Première installation</string>
     <string name="mode_shizuku_suspend">Shizuku - Suspendre</string>
     <plurals name="deferred_task_entry">
         <item quantity="one">%d minute</item>
@@ -125,7 +125,7 @@
     <string name="mode_island_suspend">Island/Insular - Suspendre</string>
     <string name="action_fdroid">F-Droid</string>
     <string name="msg_guide">Avant de geler des applications, merci de sélectionner un mode de fonctionnement dans les paramètres.</string>
-    <string name="sort_update">Dernière mise à jour</string>
+    <string name="sort_by_update_time">Dernière mise à jour</string>
     <string name="permission_denied">Permission refusée</string>
     <string name="app_slogan">Freezedom!</string>
     <string name="auto_freeze">Gel automatique</string>

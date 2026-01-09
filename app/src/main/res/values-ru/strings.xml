@@ -57,9 +57,9 @@
     <string name="filter_frozen_apps">Замороженые</string>
     <string name="filter_unfrozen_apps">Незамороженые</string>
     <string name="sort_by">Сортировка по</string>
-    <string name="sort_name">Название</string>
-    <string name="sort_install">Дата установки</string>
-    <string name="sort_update">Дата обновления</string>
+    <string name="sort_by_name">Название</string>
+    <string name="sort_by_install_time">Дата установки</string>
+    <string name="sort_by_update_time">Дата обновления</string>
     <string name="title_donate">Спасибо!</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>

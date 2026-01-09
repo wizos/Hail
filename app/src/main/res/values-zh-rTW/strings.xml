@@ -57,9 +57,9 @@
     <string name="filter_frozen_apps">已凍結</string>
     <string name="filter_unfrozen_apps">未凍結</string>
     <string name="sort_by">排序方式</string>
-    <string name="sort_name">名稱</string>
-    <string name="sort_install">首次安裝</string>
-    <string name="sort_update">最近更新</string>
+    <string name="sort_by_name">名稱</string>
+    <string name="sort_by_install_time">首次安裝</string>
+    <string name="sort_by_update_time">最近更新</string>
     <string name="title_donate">謝謝你！</string>
     <string name="donate_alipay">支付寶</string>
     <string name="donate_wechat">微信支付</string>
@@ -155,4 +155,17 @@
     <string name="theme_light">淺色模式</string>
     <string name="theme_dark">深色模式</string>
     <string name="xposed_description">為作用域内的程式自動解凍被暫停的應用程式</string>
+
+    <!-- 在文件末尾 </resources> 前添加 -->
+    <string name="auth_type_title">认证方式</string>
+    <string name="auth_type_biometric">生物识别（指纹/人脸）</string>
+    <string name="auth_type_password">密码（计算器伪装）</string>
+    <string name="set_password">设置密码</string>
+    <string name="set_password_summary">设置计算器伪装密码</string>
+    <string name="set_password_message">只能输入 0-9 数字密码，在计算器中长按 = 号解密</string>
+    <string name="password_hint">输入密码</string>
+    <string name="password_set_success">密码设置成功</string>
+    <string name="password_format_error">密码格式错误：只能输入 0-9 数字</string>
+    <string name="reauth_on_resume">切换应用后重新认证</string>
+    <string name="reauth_on_screen_off">息屏后重新认证</string>
 </resources>

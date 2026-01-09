@@ -1,26 +1,42 @@
 package com.aistra.hail
 
 import android.app.Application
-import android.app.UiModeManager
 import android.content.ComponentName
 import android.content.Context
 import android.content.Intent
 import android.content.pm.PackageManager
-import androidx.appcompat.app.AppCompatDelegate
 import androidx.core.content.ContextCompat
-import androidx.core.content.getSystemService
 import com.aistra.hail.app.AppManager
 import com.aistra.hail.app.HailData
 import com.aistra.hail.services.AutoFreezeService
+import com.aistra.hail.ui.apps.AppsViewModel
+import com.aistra.hail.ui.auth.AuthViewModel
+import com.aistra.hail.ui.home.HomeViewModel
+import com.aistra.hail.ui.settings.SettingsViewModel
 import com.aistra.hail.utils.HDhizuku
-import com.aistra.hail.utils.HTarget
+import io.insertkoin.android.ext.koin.androidApplication
+import io.insertkoin.android.ext.koin.androidContext
+import io.insertkoin.core.context.startKoin
+import io.insertkoin.dsl.module
+import org.koin.androidx.viewmodel.dsl.viewModel
+
+val appModule = module {
+    viewModel { HomeViewModel(androidApplication()) }
+    viewModel { AuthViewModel() }
+    viewModel { SettingsViewModel(androidApplication()) }
+    viewModel { AppsViewModel(androidApplication()) }
+}
 
 class HailApp : Application() {
     override fun onCreate() {
         super.onCreate()
         app = this
-        // DirtyDataUpdater.update(app)
-        if (!HTarget.S) setAppTheme(HailData.appTheme)
+
+        startKoin {
+            androidContext(this@HailApp)
+            modules(appModule)
+        }
+
         if (HailData.workingMode.startsWith(HailData.DHIZUKU)) HDhizuku.init()
     }
 
@@ -47,22 +63,8 @@ class HailApp : Application() {
     }
 
     fun setAppTheme(theme: String) {
-        if (HTarget.S) getSystemService<UiModeManager>()!!.setApplicationNightMode(
-            when (theme) {
-                HailData.THEME_LIGHT -> UiModeManager.MODE_NIGHT_NO
-                HailData.THEME_DARK -> UiModeManager.MODE_NIGHT_YES
-                else -> UiModeManager.MODE_NIGHT_AUTO
-            }
-        )
-        else AppCompatDelegate.setDefaultNightMode(
-            when (theme) {
-                HailData.THEME_LIGHT -> AppCompatDelegate.MODE_NIGHT_NO
-                HailData.THEME_DARK -> AppCompatDelegate.MODE_NIGHT_YES
-                else -> AppCompatDelegate.MODE_NIGHT_FOLLOW_SYSTEM
-            }
-        )
+        HailData.appTheme = theme
     }
-
 
     companion object {
         lateinit var app: HailApp private set

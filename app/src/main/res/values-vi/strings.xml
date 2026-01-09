@@ -25,7 +25,7 @@
     <string name="icon_pack">Gói biểu tượng</string>
     <string name="mode_owner_hide">Chủ sở hữu thiết bị -Ẩn</string>
     <string name="working_mode">Chế độ làm việc</string>
-    <string name="sort_name">Tên</string>
+    <string name="sort_by_name">Tên</string>
     <string name="auto_freeze_notification_title">Dịch vụ tự động đóng băng đang chạy</string>
     <string name="filter_frozen_apps">Đóng băng</string>
     <string name="msg_selected">Đã chọn: %s</string>
@@ -81,7 +81,7 @@
     <string name="donate_alipay">Ủng hộ bằng Alipay</string>
     <string name="action_undo">Hoàn tác</string>
     <string name="filter_system_apps">Hệ thống</string>
-    <string name="sort_install">Thời gian cài đặt</string>
+    <string name="sort_by_install_time">Thời gian cài đặt</string>
     <string name="action_tag_remove">Xóa nhãn</string>
     <string name="mode_su_suspend">Root - Tạm ngừng</string>
     <plurals name="deferred_task_entry">
@@ -89,7 +89,7 @@
     </plurals>
     <string name="action_lock">Khóa</string>
     <string name="msg_guide">Trước khi đóng băng ứng dụng, hãy chọn chế độ làm việc trong thiết lập.</string>
-    <string name="sort_update">Cập nhật gần nhất</string>
+    <string name="sort_by_update_time">Cập nhật gần nhất</string>
     <string name="action_unfreeze">Rã băng</string>
     <string name="msg_biometric">Đăng nhập bằng thông tin sinh trắc học của bạn</string>
     <string name="permission_denied">Quyền bị từ chối</string>

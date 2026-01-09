@@ -55,9 +55,9 @@
     <string name="filter_frozen_apps">یخ‌زده</string>
     <string name="filter_unfrozen_apps">یخ‌زدوده</string>
     <string name="sort_by">چینش با</string>
-    <string name="sort_name">نام</string>
-    <string name="sort_install">نصب نخست</string>
-    <string name="sort_update">آخرین بروزرسانی</string>
+    <string name="sort_by_name">نام</string>
+    <string name="sort_by_install_time">نصب نخست</string>
+    <string name="sort_by_update_time">آخرین بروزرسانی</string>
     <string name="title_donate">سپاس از شما!</string>
     <string name="donate_wechat">پرداخت وی‌چت</string>
     <string name="donate_wechat_scan">اسکن</string>

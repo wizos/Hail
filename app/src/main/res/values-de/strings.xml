@@ -62,9 +62,9 @@
     <string name="filter_frozen_apps">Eingefroren</string>
     <string name="filter_unfrozen_apps">Nicht eingefroren</string>
     <string name="sort_by">Sortieren nach</string>
-    <string name="sort_name">Name</string>
-    <string name="sort_install">Installationszeitpunkt</string>
-    <string name="sort_update">Letztes Update</string>
+    <string name="sort_by_name">Name</string>
+    <string name="sort_by_install_time">Installationszeitpunkt</string>
+    <string name="sort_by_update_time">Letztes Update</string>
     <string name="title_donate">Vielen Dank!</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>

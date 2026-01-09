@@ -27,7 +27,7 @@
     <string name="icon_pack">Pacote de ícones</string>
     <string name="mode_owner_hide">Proprietário do dispositivo - Oculto</string>
     <string name="working_mode">Modo de trabalho</string>
-    <string name="sort_name">Nome</string>
+    <string name="sort_by_name">Nome</string>
     <string name="auto_freeze_notification_title">O serviço de auto congelamento está em execução</string>
     <string name="filter_frozen_apps">Congelados</string>
     <string name="msg_selected">Selecionado: %s</string>
@@ -88,7 +88,7 @@
     <string name="donate_alipay">Alipay</string>
     <string name="action_undo">Desfazer</string>
     <string name="filter_system_apps">Sistema</string>
-    <string name="sort_install">Primeira instalação</string>
+    <string name="sort_by_install_time">Primeira instalação</string>
     <string name="action_tag_remove">Remover tag</string>
     <string name="mode_shizuku_suspend">Shizuku – Suspenso</string>
     <string name="mode_su_suspend">Root - Suspenso</string>
@@ -101,7 +101,7 @@
     <string name="action_fdroid">F-Droid</string>
     <string name="action_lock">Bloquear</string>
     <string name="msg_guide">Antes de congelar aplicações, selecione um modo de funcionamento nas configurações.</string>
-    <string name="sort_update">Última atualização</string>
+    <string name="sort_by_update_time">Última atualização</string>
     <string name="action_unfreeze">Descongelar</string>
     <string name="msg_biometric">Faça login usando a sua credencial biométrica</string>
     <string name="permission_denied">Permissão negada</string>

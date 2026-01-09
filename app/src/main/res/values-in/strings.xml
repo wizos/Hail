@@ -54,7 +54,7 @@
 \nAplikasi yang dibekukan akan tetap beku setelah Hail dihapus, pastikan telah mengaktifkannya terlebih dahulu.</string>
     <string name="title_remove_owner">Hapus Pemilik Perangkat</string>
     <string name="filter_system_apps">Sistem</string>
-    <string name="sort_name">Nama</string>
+    <string name="sort_by_name">Nama</string>
     <string name="title_donate">Terima kasih!</string>
     <string name="donate_wechat_scan">Pindai</string>
     <string name="permission_denied">Akses ditolak</string>
@@ -106,8 +106,8 @@
     <string name="action_export_clipboard">Ekspor ke papan klip</string>
     <string name="mode_owner_suspend">Pemilik Perangkat - Tangguhkan</string>
     <string name="sort_by">Urutkan</string>
-    <string name="sort_update">Terakhir diperbarui</string>
-    <string name="sort_install">Terinstal pertama</string>
+    <string name="sort_by_update_time">Terakhir diperbarui</string>
+    <string name="sort_by_install_time">Terinstal pertama</string>
     <string name="donate_paypal">Paypal</string>
     <string name="app_slogan">Freezedom!</string>
     <string name="donate_bilibili_msg">Ikuti saya di Bilibili.</string>

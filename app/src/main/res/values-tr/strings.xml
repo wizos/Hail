@@ -52,9 +52,9 @@
     <string name="filter_frozen_apps">Dondurulmuş</string>
     <string name="filter_unfrozen_apps">Çözülmüş</string>
     <string name="sort_by">Şuna göre sırala</string>
-    <string name="sort_name">İsim</string>
-    <string name="sort_install">İlk yüklenme</string>
-    <string name="sort_update">Son güncellenme</string>
+    <string name="sort_by_name">İsim</string>
+    <string name="sort_by_install_time">İlk yüklenme</string>
+    <string name="sort_by_update_time">Son güncellenme</string>
     <string name="title_donate">Teşekkürler!</string>
     <string name="donate_alipay">Alipay</string>
     <string name="donate_wechat">WeChat Pay</string>

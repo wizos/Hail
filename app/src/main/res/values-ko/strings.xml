@@ -56,8 +56,8 @@
     <string name="filter_frozen_apps">동결</string>
     <string name="filter_unfrozen_apps">동결 해제</string>
     <string name="sort_by">정렬 기준</string>
-    <string name="sort_install">첫 설치</string>
-    <string name="sort_update">마지막 업데이트</string>
+    <string name="sort_by_install_time">첫 설치</string>
+    <string name="sort_by_update_time">마지막 업데이트</string>
     <string name="title_donate">고맙습니다!</string>
     <string name="donate_alipay">알리페이</string>
     <string name="donate_wechat_scan">스캔</string>
@@ -93,7 +93,7 @@
     <string name="freeze_system_app">시스템 애플리케이션을 강제 종료하거나 제거하면 기기가 부팅 루프에 빠질 수 있습니다. 무엇을 하고 있는지 확실히 알고, 사전에 데이터를 백업하거나 파일 관리를 지원하는 복구 도구를 사용하십시오.</string>
     <string name="app_theme">앱 테마</string>
     <string name="tap_to_select">터치하여 다중 선택</string>
-    <string name="sort_name">이름</string>
+    <string name="sort_by_name">이름</string>
     <string name="donate_bilibili_space">Bilibili 공간</string>
     <string name="action_deferred_task">지연된 작업</string>
     <string name="msg_remove_owner">Hail이 장치 소유자로부터 제거되면 Hail 제거 후 앱을 재구성하는 데 어려움이 발생할 수 있습니다.\n동결된 앱은 제거 후에도 동결 상태로 유지됩니다. 중요한 앱이 동결 해제되었는지 확인해 주시기 바랍니다.</string>

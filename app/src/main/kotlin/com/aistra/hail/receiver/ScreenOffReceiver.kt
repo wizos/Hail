@@ -6,6 +6,7 @@ import android.content.Intent
 import androidx.preference.PreferenceManager
 import com.aistra.hail.ui.auth.AuthManager
 import com.aistra.hail.work.HWork
+import androidx.core.content.edit
 
 class ScreenOffReceiver : BroadcastReceiver() {
     override fun onReceive(context: Context, intent: Intent) {
@@ -15,9 +16,9 @@ class ScreenOffReceiver : BroadcastReceiver() {
             if (AuthManager.needReauthOnScreenOff()) {
                 // 标记需要重新认证
                 PreferenceManager.getDefaultSharedPreferences(context)
-                    .edit()
-                    .putBoolean("need_reauth", true)
-                    .apply()
+                    .edit(commit = true) {
+                        putBoolean("need_reauth", true)
+                    }
             }
         }
     }

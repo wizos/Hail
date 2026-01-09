@@ -98,9 +98,9 @@
     <string name="skip_notifying_app">Пропустити застосунок зі сповіщенням</string>
     <string name="skip_while_charging">Не заморожувати під час зарядки</string>
     <string name="sort_by">Сортувати за</string>
-    <string name="sort_install">Дата встановлення</string>
-    <string name="sort_name">Назва</string>
-    <string name="sort_update">Останнє оновлення</string>
+    <string name="sort_by_install_time">Дата встановлення</string>
+    <string name="sort_by_name">Назва</string>
+    <string name="sort_by_update_time">Останнє оновлення</string>
     <string name="synthesize_adaptive_icons">Створити адаптивні іконки</string>
     <string name="tap_to_select">Натисніть, щоб вибрати кілька</string>
     <string name="tile_action">Дія плитки</string>

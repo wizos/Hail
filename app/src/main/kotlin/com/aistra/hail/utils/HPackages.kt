@@ -2,6 +2,7 @@ package com.aistra.hail.utils
 
 import android.app.ActivityManager
 import android.app.AppOpsManager
+import android.content.Intent
 import android.content.pm.ApplicationInfo
 import android.content.pm.PackageManager
 import android.os.Build
@@ -14,6 +15,32 @@ object HPackages {
     val myUserId get() = android.os.Process.myUserHandle().hashCode()
 
     fun packageUri(packageName: String) = "package:$packageName"
+
+    fun isActivityExists(intent: Intent): Boolean {
+        val activities = if (HTarget.T) {
+            app.packageManager.queryIntentActivities(
+                intent,
+                PackageManager.ResolveInfoFlags.of(PackageManager.MATCH_DEFAULT_ONLY.toLong())
+            )
+        } else {
+            app.packageManager.queryIntentActivities(
+                intent,
+                PackageManager.MATCH_DEFAULT_ONLY
+            )
+        }
+        return activities.isNotEmpty()
+    }
+
+    fun isUsageStatsGranted(): Boolean {
+        val appOps = app.getSystemService<AppOpsManager>() ?: return false
+        val mode = if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+            appOps.unsafeCheckOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, android.os.Process.myUid(), app.packageName)
+        } else {
+            @Suppress("DEPRECATION")
+            appOps.checkOpNoThrow(AppOpsManager.OPSTR_GET_USAGE_STATS, android.os.Process.myUid(), app.packageName)
+        }
+        return mode == AppOpsManager.MODE_ALLOWED
+    }
 
     @RequiresApi(Build.VERSION_CODES.N)
     fun packageUid(packageName: String) = if (HTarget.T) app.packageManager.getPackageUid(
